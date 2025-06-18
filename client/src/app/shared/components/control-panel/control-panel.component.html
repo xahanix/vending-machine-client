@@ -1,12 +1,12 @@
 <div class="bg-gray-700 rounded-lg p-6 space-y-4">
   <!-- Header -->
-  <h2 class="text-white text-xl font-semibold text-center mb-4">Control Panel</h2>
+  <h2 class="text-white text-xl font-semibold text-center mb-4">Bedienfeld</h2>
 
   <!-- Coin Selection Section -->
   <div>
     <h3 class="text-gray-300 text-sm font-medium mb-3 flex items-center">
       <span class="mr-2">🪙</span>
-      Insert Coins
+      Münzen einwerfen
     </h3>
 
     <!-- Individual Coin Buttons -->
@@ -28,7 +28,7 @@
       <div class="bg-blue-100 border border-blue-200 rounded-lg p-3 mb-4">
         <div class="flex items-center justify-center">
           <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600 mr-2"></div>
-          <span class="text-blue-800 text-sm">Processing coin...</span>
+          <span class="text-blue-800 text-sm">Verarbeite Münze...</span>
         </div>
       </div>
     }
@@ -42,7 +42,7 @@
         <button
           (click)="coinStore.clearError()"
           class="mt-2 bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1 rounded transition-colors duration-200">
-          Dismiss
+          Schliessen
         </button>
       </div>
     }
@@ -55,7 +55,7 @@
       (click)="onPurchaseSelected()"
       [disabled]="disabled() || !selectedProduct() || (coinStore.currentAmount() < (selectedProduct()?.price || 0))"
       class="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-800 disabled:text-gray-500 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200">
-      Purchase Selected
+      Auswahl Kaufen
     </button>
 
     <!-- Cancel/Refund Button -->
@@ -63,25 +63,25 @@
       (click)="onCancelRefund()"
       [disabled]="disabled() || coinStore.isProcessing()"
       class="w-full bg-red-600 hover:bg-red-700 disabled:bg-gray-500 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200">
-      Cancel/Refund
+      Abbrechen/Rückerstattung
     </button>
   </div>
 
 
-  <!-- Inserted Amount Display -->
+  <!-- Eingeworfener Betrag Display -->
   @if (coinStore.currentAmount() > 0) {
     <div class="bg-gray-800 rounded-lg p-3 text-center">
       <div class="text-green-400 font-mono">
-        Inserted: CHF {{ coinStore.currentAmount().toFixed(2) }}
+        Eingeworfen: CHF {{ coinStore.currentAmount().toFixed(2) }}
       </div>
       @if (selectedProduct()) {
         <div class="text-gray-400 text-sm">
-          Need: CHF {{ Math.max(0, selectedProduct()!.price - coinStore.currentAmount()).toFixed(2) }}
+          Benötigt: CHF {{ Math.max(0, selectedProduct()!.price - coinStore.currentAmount()).toFixed(2) }}
         </div>
       }
       @if (coinStore.lastInsertedCoin()) {
         <div class="text-yellow-400 text-xs mt-1">
-          Last: {{ getCoinInfo(coinStore.lastInsertedCoin()!).displayName }}
+          Zuletzt: {{ getCoinInfo(coinStore.lastInsertedCoin()!).displayName }}
         </div>
       }
     </div>

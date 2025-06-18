@@ -45,6 +45,19 @@ export class ProductsService {
     }
   }
 
+  async purchaseProduct(productId: string): Promise<Product> {
+    try {
+      // API specification requires a GET request with the product ID in the path
+      return await firstValueFrom(
+        this.http.get<Product>(`${environment.apiUrl}/vendingmachine/product/${productId}`)
+      );
+    } catch (error) {
+      console.error('Error purchasing product:', error);
+      // Re-throw the original error to allow for more specific error handling in the store
+      throw error;
+    }
+  }
+
   async deleteProduct(id: string): Promise<void> {
     try {
       await firstValueFrom(

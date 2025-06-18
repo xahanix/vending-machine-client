@@ -2,7 +2,7 @@
 @if (productsStore.isLoading()) {
   <div class="flex justify-center items-center py-12">
     <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-    <span class="ml-3 text-gray-600">Loading products...</span>
+    <span class="ml-3 text-gray-600">Lade Produkte...</span>
   </div>
 }
 
@@ -12,7 +12,7 @@
     <div class="flex items-center mb-4">
       <span class="text-2xl mr-3">⚠️</span>
       <div>
-        <h3 class="text-lg font-medium text-red-800">Error Loading Products</h3>
+        <h3 class="text-lg font-medium text-red-800">Fehler beim Laden der Produkte</h3>
         <p class="text-red-700">{{ productsStore.error() }}</p>
       </div>
     </div>
@@ -20,7 +20,7 @@
       <button 
         (click)="productsStore.loadProducts()" 
         class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors duration-200">
-        Try Again
+        Erneut versuchen
       </button>
       <button 
         (click)="productsStore.clearError()" 
@@ -49,18 +49,12 @@
                         {{ product.price | currency:'CHF':'symbol':'1.2-2' }}
                     </span>
                 </div>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center space-x-2">
-                        <span class="text-sm text-gray-600">Stock:</span>
-                        <span [ngClass]="getStockBadgeClass(product)" class="px-2 py-1 rounded-full text-xs font-medium">
-                            {{ product.inventory }}
-                        </span>
-                    </div>
+                <div class="flex justify-end items-center">
                     <button 
                         class="px-4 py-2 rounded-md font-medium transition-colors duration-200"
                         [class]="getButtonClass(product)"
                         [disabled]="product.inventory === 0">
-                        {{ product.inventory > 0 ? 'Select' : 'Out of Stock' }}
+                        {{ product.inventory > 0 ? 'Auswählen' : 'Ausverkauft' }}
                     </button>
                 </div>
             </div>
@@ -74,7 +68,7 @@
 @if (!productsStore.isLoading() && !productsStore.error() && productsStore.products().length === 0) {
   <div class="text-center py-12">
     <div class="text-6xl mb-4">📦</div>
-    <h3 class="text-xl font-medium text-gray-800 mb-2">No Products Available</h3>
-    <p class="text-gray-600">Check back later for available products.</p>
+    <h3 class="text-xl font-medium text-gray-800 mb-2">Keine Produkte verfügbar</h3>
+    <p class="text-gray-600">Momentan sind keine Produkte verfügbar. Bitte versuchen Sie es später erneut.</p>
   </div>
 }

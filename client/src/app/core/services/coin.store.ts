@@ -91,5 +91,13 @@ export const CoinStore = signalStore(
         error: null 
       });
     },
+
+    setProcessing(isProcessing: boolean): void {
+      patchState(store, { isProcessing });
+    },
+
+    setError(error: string | null): void {
+      patchState(store, { error });
+    }
   }))
 );

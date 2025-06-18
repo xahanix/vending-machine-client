@@ -24,17 +24,7 @@ export class VendingMachineComponent implements OnInit {
   }
 
   onPurchaseRequested(): void {
-    const product = this.productsStore.selectedProduct();
-    if (!product) return;
-
-    // Update inventory in the store
-    this.productsStore.updateProductInventory(product.id, product.inventory - 1);
-    
-    // Reset payment and clear selection
-    this.coinStore.resetAmount();
-    this.productsStore.setSelectedProduct(null);
-    
-    console.log('Purchase completed for:', product.name);
+    this.productsStore.purchaseSelectedProduct();
   }
 
   onCancelRequested(): void {

@@ -10,25 +10,14 @@ import { ProductsStore } from '../../../core/services/products.store';
   templateUrl: './product-overview.component.html',
   styles: []
 })
-export class ProductOverviewComponent implements OnInit {
+export class ProductOverviewComponent {
   productsStore = inject(ProductsStore);
-  ngOnInit(): void {
-    // Products are now loaded by the parent container component.
-  }
+
 
   onProductClicked(product: Product): void {
     this.productsStore.setSelectedProduct(product);
   }
 
-  getStockBadgeClass(product: Product): string {
-    const inventory = product.inventory;
-    if (inventory === 0) {
-      return 'bg-red-100 text-red-800';
-    } else if (inventory <= 5) {
-      return 'bg-yellow-100 text-yellow-800';
-    }
-    return 'bg-green-100 text-green-800';
-  }
 
   getButtonClass(product: Product): string {
     const inventory = product.inventory;

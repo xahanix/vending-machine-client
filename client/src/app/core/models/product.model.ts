@@ -1,3 +1,5 @@
+import { Coin } from './coin.model';
+
 export interface Product {
   id: string;
   name: string;
