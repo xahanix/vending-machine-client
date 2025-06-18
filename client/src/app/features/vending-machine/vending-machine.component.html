@@ -1,0 +1,47 @@
+<div class="p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
+  <h2 class="text-2xl font-bold text-center text-blue-600">Vending Machine</h2>
+
+  <div class="text-center">
+    <p class="text-lg text-gray-700">Inserted Amount:</p>
+    <p class="text-3xl font-semibold text-green-600">
+      {{ coinsStore.insertedAmount() | currency:'EUR':'symbol':'1.2-2' }}
+    </p>
+  </div>
+
+  @if (coinsStore.isLoading()) {
+    <div class="text-center text-blue-500">
+      <p>Processing...</p>
+      <!-- You could add a spinner here -->
+    </div>
+  }
+
+  @if (coinsStore.error(); as error) {
+    <div class="p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+      <p>Error: {{ error }}</p>
+    </div>
+  }
+
+  <div class="space-y-2">
+    <p class="text-md font-semibold text-gray-600">Insert Coins:</p>
+    <div class="grid grid-cols-2 gap-2">
+      @for (coin of validCoins; track coin) {
+        <button 
+          (click)="insertCoin(coin)" 
+          [disabled]="coinsStore.isLoading()"
+          class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed">
+          {{ coin | currency:'EUR':'symbol':'1.2-2' }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div>
+    <button 
+      (click)="refundCoins()" 
+      [disabled]="coinsStore.isLoading() || coinsStore.insertedAmount() === 0"
+      class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed">
+      Cancel / Refund
+    </button>
+  </div>
+
+</div>
