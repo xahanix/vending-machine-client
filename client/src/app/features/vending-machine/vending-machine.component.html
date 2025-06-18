@@ -1,47 +1,61 @@
-<div class="p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
-  <h2 class="text-2xl font-bold text-center text-blue-600">Vending Machine</h2>
-
-  <div class="text-center">
-    <p class="text-lg text-gray-700">Inserted Amount:</p>
-    <p class="text-3xl font-semibold text-green-600">
-      {{ coinsStore.insertedAmount() | currency:'EUR':'symbol':'1.2-2' }}
-    </p>
-  </div>
-
-  @if (coinsStore.isLoading()) {
-    <div class="text-center text-blue-500">
-      <p>Processing...</p>
-      <!-- You could add a spinner here -->
+<!-- Main Container -->
+<div class="min-h-screen bg-gray-800 p-6">
+  <!-- Header -->
+  <div class="bg-black rounded-lg p-4 mb-6 flex items-center justify-between">
+    <div class="flex items-center">
+      <div class="text-2xl mr-3">🤖</div>
+      <div>
+        <h1 class="text-white text-2xl font-bold">VENDING MACHINE</h1>
+        <p class="text-gray-400 text-sm">Select your favorite snacks & drinks</p>
+      </div>
     </div>
-  }
-
-  @if (coinsStore.error(); as error) {
-    <div class="p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-      <p>Error: {{ error }}</p>
-    </div>
-  }
-
-  <div class="space-y-2">
-    <p class="text-md font-semibold text-gray-600">Insert Coins:</p>
-    <div class="grid grid-cols-2 gap-2">
-      @for (coin of validCoins; track coin) {
-        <button 
-          (click)="insertCoin(coin)" 
-          [disabled]="coinsStore.isLoading()"
-          class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed">
-          {{ coin | currency:'EUR':'symbol':'1.2-2' }}
-        </button>
-      }
+    <div class="flex items-center">
+      <div class="w-3 h-3 bg-green-400 rounded-full mr-2"></div>
+      <span class="text-green-400 font-medium">ONLINE</span>
     </div>
   </div>
 
-  <div>
-    <button 
-      (click)="refundCoins()" 
-      [disabled]="coinsStore.isLoading() || coinsStore.insertedAmount() === 0"
-      class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed">
-      Cancel / Refund
-    </button>
+  <!-- Main Content Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+    <!-- Available Products Section -->
+    <div class="lg:col-span-2">
+      <div class="bg-white rounded-lg p-6">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-semibold text-gray-800">Available Products</h2>
+          <span class="text-gray-600">{{ productsStore.products().length }} items</span>
+        </div>
+        <app-product-overview></app-product-overview>
+      </div>
+    </div>
+
+    <!-- Control Panel Section -->
+    <div class="lg:col-span-1">
+      <app-control-panel
+        [selectedProduct]="productsStore.selectedProduct()"
+        (purchaseRequested)="onPurchaseRequested()"
+        (cancelRequested)="onCancelRequested()">
+      </app-control-panel>
+    </div>
   </div>
 
+  <!-- Bottom Dispensers -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Product Dispenser -->
+    <div class="bg-gray-700 rounded-lg p-6 border-2 border-yellow-500">
+      <div class="text-center">
+        <div class="text-4xl mb-3">📦</div>
+        <h3 class="text-white text-lg font-semibold mb-2">Product Dispenser</h3>
+        <p class="text-gray-300 text-sm">Your item will appear here</p>
+      </div>
+    </div>
+
+    <!-- Change Return -->
+    <div class="bg-gray-700 rounded-lg p-6 border-2 border-green-500">
+      <div class="text-center">
+        <div class="text-4xl mb-3">💰</div>
+        <h3 class="text-white text-lg font-semibold mb-2">Change Return</h3>
+        <p class="text-gray-300 text-sm">Collect your change here</p>
+      </div>
+    </div>
+  </div>
 </div>
