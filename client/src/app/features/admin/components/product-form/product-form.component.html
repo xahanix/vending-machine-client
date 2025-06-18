@@ -1,0 +1,40 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="space-y-4">
+  <h2 class="text-xl font-bold text-gray-800">{{ isEditMode ? 'Produkt bearbeiten' : 'Neues Produkt erstellen' }}</h2>
+
+  <!-- Product Name -->
+  <div>
+    <label for="name" class="block text-sm font-medium text-gray-700">Produktname</label>
+    <input id="name" type="text" formControlName="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+    @if (productForm.get('name')?.invalid && productForm.get('name')?.touched) {
+      <p class="text-red-600 text-sm mt-1">Ein Produktname ist erforderlich.</p>
+    }
+  </div>
+
+  <!-- Product Price -->
+  <div>
+    <label for="price" class="block text-sm font-medium text-gray-700">Preis (CHF)</label>
+    <input id="price" type="number" formControlName="price" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+    @if (productForm.get('price')?.invalid && productForm.get('price')?.touched) {
+      <p class="text-red-600 text-sm mt-1">Ein gültiger Preis ist erforderlich (mind. 0.05).</p>
+    }
+  </div>
+
+  <!-- Product Inventory -->
+  <div>
+    <label for="inventory" class="block text-sm font-medium text-gray-700">Lagerbestand</label>
+    <input id="inventory" type="number" formControlName="inventory" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+    @if (productForm.get('inventory')?.invalid && productForm.get('inventory')?.touched) {
+      <p class="text-red-600 text-sm mt-1">Ein gültiger Lagerbestand ist erforderlich (mind. 0).</p>
+    }
+  </div>
+
+  <!-- Actions -->
+  <div class="flex justify-end space-x-3">
+    <button type="button" (click)="cancel.emit()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+      Abbrechen
+    </button>
+    <button type="submit" [disabled]="productForm.invalid" class="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+      {{ isEditMode ? 'Änderungen speichern' : 'Produkt erstellen' }}
+    </button>
+  </div>
+</form>
