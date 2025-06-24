@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Product, ProductRequestDto } from '../../../../core/models/product.model';
+import { Product } from '../../../core/models/Product/product.model';
 import { CommonModule } from '@angular/common';
+import {ProductRequestDto} from '../../../core/models/Product/ProductRequestDto';
 
 @Component({
   selector: 'app-product-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './product-form.component.html',
-  styleUrls: ['./product-form.component.css']
 })
 export class ProductFormComponent implements OnInit {
   @Input() product?: Product;

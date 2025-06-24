@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { CoinType } from '../models/coin.model';
-import { environment } from '../../../environments/environment';
+import { CoinType } from '../../models/Coin/coin.model';
+import { environment } from '../../../../environments/environment';
 
 export interface CoinRequestDto {
   coin: CoinType;

@@ -1,10 +1,11 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { ProductsStore } from '../../core/services/products.store';
+import { ProductsStore } from '../../core/store/Product/products.store';
 import { ModalComponent } from '../../shared/components/modal/modal.component';
-import { ProductFormComponent } from './components/product-form/product-form.component';
+import { ProductFormComponent } from '../../shared/components/product-form/product-form.component';
 
-import { Product, ProductRequestDto } from '../../core/models/product.model';
+import { Product } from '../../core/models/Product/product.model';
 import { CommonModule } from '@angular/common';
+import {ProductRequestDto} from '../../core/models/Product/ProductRequestDto';
 
 @Component({
   selector: 'app-admin',

@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AdminComponent } from './features/admin/admin.component';
 
 export const routes: Routes = [
   {

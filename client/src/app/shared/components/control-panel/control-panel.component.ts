@@ -1,8 +1,8 @@
 import { Component, input, output, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Coin, SWISS_COINS, CoinType } from '../../../core/models/coin.model';
-import { Product } from '../../../core/models/product.model';
-import { CoinStore } from '../../../core/services/coin.store';
+import { Coin, SWISS_COINS, CoinType } from '../../../core/models/Coin/coin.model';
+import { Product } from '../../../core/models/Product/product.model';
+import { CoinStore } from '../../../core/store/Coin/coin.store';
 
 @Component({
   selector: 'app-control-panel',

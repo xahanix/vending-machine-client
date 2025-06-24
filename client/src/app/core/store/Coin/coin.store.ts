@@ -1,7 +1,7 @@
 import { computed, inject } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
-import { CoinType } from '../models/coin.model';
-import { CoinService } from './coin.service';
+import { CoinType } from '../../models/Coin/coin.model';
+import { CoinService } from '../../services/Coin/coin.service';
 
 export interface CoinState {
   currentAmount: number;
@@ -28,54 +28,54 @@ export const CoinStore = signalStore(
   withMethods((store, coinService = inject(CoinService)) => ({
     async insertCoin(coin: CoinType): Promise<void> {
       patchState(store, { isProcessing: true, error: null });
-      
+
       try {
         const newAmount = await coinService.insertCoin(coin);
-        patchState(store, { 
+        patchState(store, {
           currentAmount: newAmount,
           lastInsertedCoin: coin,
-          isProcessing: false 
+          isProcessing: false
         });
       } catch (error: any) {
-        patchState(store, { 
-          error: error?.message || 'Failed to insert coin', 
-          isProcessing: false 
+        patchState(store, {
+          error: error?.message || 'Failed to insert coin',
+          isProcessing: false
         });
       }
     },
 
     async getCurrentBalance(): Promise<void> {
       patchState(store, { isProcessing: true, error: null });
-      
+
       try {
         const amount = await coinService.getCurrentBalance();
-        patchState(store, { 
+        patchState(store, {
           currentAmount: amount,
-          isProcessing: false 
+          isProcessing: false
         });
       } catch (error: any) {
-        patchState(store, { 
-          error: error?.message || 'Failed to get current balance', 
-          isProcessing: false 
+        patchState(store, {
+          error: error?.message || 'Failed to get current balance',
+          isProcessing: false
         });
       }
     },
 
     async returnCoins(): Promise<void> {
       patchState(store, { isProcessing: true, error: null });
-      
+
       try {
         await coinService.returnCoins();
-        patchState(store, { 
+        patchState(store, {
           currentAmount: 0,
           lastInsertedCoin: null,
-          isProcessing: false 
+          isProcessing: false
         });
         console.log('Coins returned successfully');
       } catch (error: any) {
-        patchState(store, { 
-          error: error?.message || 'Failed to return coins', 
-          isProcessing: false 
+        patchState(store, {
+          error: error?.message || 'Failed to return coins',
+          isProcessing: false
         });
       }
     },
@@ -85,10 +85,10 @@ export const CoinStore = signalStore(
     },
 
     resetAmount(): void {
-      patchState(store, { 
-        currentAmount: 0, 
+      patchState(store, {
+        currentAmount: 0,
         lastInsertedCoin: null,
-        error: null 
+        error: null
       });
     },
 

@@ -1,15 +1,11 @@
 <div class="bg-gray-700 rounded-lg p-6 space-y-4">
-  <!-- Header -->
   <h2 class="text-white text-xl font-semibold text-center mb-4">Bedienfeld</h2>
-
-  <!-- Coin Selection Section -->
   <div>
     <h3 class="text-gray-300 text-sm font-medium mb-3 flex items-center">
       <span class="mr-2">🪙</span>
       Münzen einwerfen
     </h3>
 
-    <!-- Individual Coin Buttons -->
     <div class="grid grid-cols-2 gap-2 mb-4">
       @for (coin of availableCoins; track coin.coin) {
         <button
@@ -22,8 +18,6 @@
         </button>
       }
     </div>
-
-    <!-- Processing Indicator -->
     @if (coinStore.isProcessing()) {
       <div class="bg-blue-100 border border-blue-200 rounded-lg p-3 mb-4">
         <div class="flex items-center justify-center">
@@ -33,7 +27,6 @@
       </div>
     }
 
-    <!-- Error Display -->
     @if (coinStore.error()) {
       <div class="bg-red-100 border border-red-200 rounded-lg p-3 mb-4">
         <div class="flex items-center">
@@ -48,9 +41,8 @@
     }
   </div>
 
-  <!-- Action Buttons -->
+
   <div class="space-y-2">
-    <!-- Purchase Button -->
     <button
       (click)="onPurchaseSelected()"
       [disabled]="disabled() || !selectedProduct() || (coinStore.currentAmount() < (selectedProduct()?.price || 0))"
@@ -58,7 +50,6 @@
       Auswahl Kaufen
     </button>
 
-    <!-- Cancel/Refund Button -->
     <button
       (click)="onCancelRefund()"
       [disabled]="disabled() || coinStore.isProcessing()"

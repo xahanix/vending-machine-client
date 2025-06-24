@@ -2,20 +2,19 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductOverviewComponent } from '../../shared/components/product-overview/product-overview.component';
 import { ControlPanelComponent } from '../../shared/components/control-panel/control-panel.component';
-import { ProductsStore } from '../../core/services/products.store';
-import { CoinStore } from '../../core/services/coin.store';
+import { ProductsStore } from '../../core/store/Product/products.store';
+import { CoinStore } from '../../core/store/Coin/coin.store';
 
 @Component({
   selector: 'app-vending-machine',
   standalone: true,
   imports: [CommonModule, ProductOverviewComponent, ControlPanelComponent],
-  templateUrl: './vending-machine.component.html',
-  styles: []
+  templateUrl: './vending-machine.component.html'
 })
 export class VendingMachineComponent implements OnInit {
   productsStore = inject(ProductsStore);
   coinStore = inject(CoinStore);
-  
+
 
   ngOnInit(): void {
     // Load initial data for the vending machine

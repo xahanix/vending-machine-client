@@ -17,13 +17,13 @@
       </div>
     </div>
     <div class="flex gap-3">
-      <button 
-        (click)="productsStore['loadProducts']()" 
+      <button
+        (click)="productsStore.loadProducts()"
         class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors duration-200">
         Erneut versuchen
       </button>
-      <button 
-        (click)="productsStore.clearError()" 
+      <button
+        (click)="productsStore.clearError()"
         class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md transition-colors duration-200">
         Dismiss
       </button>
@@ -35,7 +35,7 @@
 @if (!productsStore.isLoading() && !productsStore.error()) {
   <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
     @for (product of productsStore.products(); track product.id) {
-      <div (click)="onProductClicked(product)" 
+      <div (click)="onProductClicked(product)"
            [class.ring-2]="productsStore.selectedProduct()?.id === product.id"
            [class.ring-blue-500]="productsStore.selectedProduct()?.id === product.id"
            class="cursor-pointer transform hover:scale-105 transition-transform duration-200">
@@ -53,7 +53,7 @@
                     </span>
                 </div>
                 <div class="flex justify-end items-center">
-                    <button 
+                    <button
                         class="px-4 py-2 rounded-md font-medium transition-colors duration-200"
                         [class]="getButtonClass(product)"
                         [disabled]="product.inventory === 0">

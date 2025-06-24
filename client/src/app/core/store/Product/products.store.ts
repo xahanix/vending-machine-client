@@ -1,26 +1,10 @@
-import { computed, inject } from '@angular/core';
-import { withHooks } from '@ngrx/signals';
-import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
-import { Product, ProductRequestDto } from '../models/product.model';
-// Force re-evaluation of the module import
-import { ProductsService } from './products.service';
-import { CoinStore } from './coin.store';
-
-export interface ProductsState {
-  products: Product[];
-  isLoading: boolean;
-  error: string | null;
-  selectedProduct: Product | null;
-}
-
-const initialState: ProductsState = {
-  products: [],
-  isLoading: false,
-  error: null,
-  selectedProduct: null,
-};
-
-const productUpdateChannel = new BroadcastChannel('product-updates');
+import {computed, inject} from '@angular/core';
+import {patchState, signalStore, withComputed, withMethods, withState} from '@ngrx/signals';
+import {Product} from '../../models/Product/product.model';
+import {ProductsService} from '../../services/Product/products.service';
+import {CoinStore} from '../Coin/coin.store';
+import {ProductRequestDto} from '../../models/Product/ProductRequestDto';
+import {initialState} from './InitialState';
 
 export const ProductsStore = signalStore(
   { providedIn: 'root' },
@@ -34,14 +18,14 @@ export const ProductsStore = signalStore(
     const methods = {
       async loadProducts(): Promise<void> {
         patchState(store, { isLoading: true, error: null });
-        
+
         try {
           const products = await productsService.getProducts();
           patchState(store, { products, isLoading: false });
         } catch (error: any) {
-          patchState(store, { 
-            error: error?.message || 'Failed to load products', 
-            isLoading: false 
+          patchState(store, {
+            error: error?.message || 'Failed to load products',
+            isLoading: false
           });
         }
       },
@@ -52,13 +36,12 @@ export const ProductsStore = signalStore(
         );
         patchState(store, { products });
       },
+      setSelectedProduct(product: Product | null): void {
+        patchState(store, { selectedProduct: product });
+      },
 
       clearError(): void {
         patchState(store, { error: null });
-      },
-
-      setSelectedProduct(product: Product | null): void {
-        patchState(store, { selectedProduct: product });
       },
 
       async purchaseSelectedProduct(): Promise<void> {
@@ -98,7 +81,7 @@ export const ProductsStore = signalStore(
             products: [...store.products(), newProduct],
             isLoading: false,
           });
-          productUpdateChannel.postMessage('products-updated');
+
         } catch (error: any) {
           patchState(store, {
             error: error?.message || 'Failed to create product',
@@ -115,11 +98,7 @@ export const ProductsStore = signalStore(
           const updatedProducts = store.products().map(p =>
             p.id === productId ? updatedProduct : p
           );
-          patchState(store, {
-            products: updatedProducts,
-            isLoading: false,
-          });
-          productUpdateChannel.postMessage('products-updated');
+          patchState(store, { products: updatedProducts, isLoading: false });
         } catch (error: any) {
           patchState(store, {
             error: error?.message || 'Failed to update product',
@@ -134,11 +113,7 @@ export const ProductsStore = signalStore(
         try {
           await productsService.deleteProduct(productId);
           const remainingProducts = store.products().filter(p => p.id !== productId);
-          patchState(store, {
-            products: remainingProducts,
-            isLoading: false,
-          });
-          productUpdateChannel.postMessage('products-updated');
+          patchState(store, { products: remainingProducts, isLoading: false });
         } catch (error: any) {
           patchState(store, {
             error: error?.message || 'Failed to delete product',
@@ -149,22 +124,5 @@ export const ProductsStore = signalStore(
       }
     };
     return methods;
-  }),
-  withHooks({
-    onInit(store: any) { // Use 'any' for now to bypass immediate type issues with loadProducts
-      productUpdateChannel.onmessage = (event) => {
-        if (event.data === 'products-updated') {
-          console.log('ProductsStore: Received products-updated broadcast, reloading products...');
-          if (typeof store.loadProducts === 'function') {
-            store.loadProducts();
-          } else {
-            console.error('ProductsStore: loadProducts method not found on store instance for broadcast update.');
-          }
-        }
-      };
-    },
-    onDestroy() {
-      productUpdateChannel.close();
-    }
   })
 );

@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { Product, ProductRequestDto } from '../models/product.model';
-import {environment} from '../../../environments/environment';
+import { Product } from '../../models/Product/product.model';
+import {environment} from '../../../../environments/environment';
+import {ProductRequestDto} from '../../models/Product/ProductRequestDto';
 
 @Injectable({
   providedIn: 'root'

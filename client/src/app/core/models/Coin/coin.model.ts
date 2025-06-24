@@ -6,20 +6,6 @@ export interface Coin {
   displayName: string;
 }
 
-export interface CoinRequestDto {
-  coin: CoinType;
-}
-
-export interface AmountDto {
-  amount: number;
-}
-
-export interface CoinInsertionState {
-  insertedCoins: Coin[];
-  totalAmount: number;
-  isProcessing: boolean;
-}
-
 // Swiss coin definitions
 export const SWISS_COINS: Coin[] = [
   { coin: 'TEN_RAPPEN', value: 0.10, displayName: '10 Rp' },
